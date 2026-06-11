@@ -205,6 +205,9 @@ S3,365390.500,4278640.880,85.11"></textarea>
         <input type="number" id="maxdist" value="0" min="0">
       </div>
     </div>
+    <label class="check"><input type="checkbox" id="autoopt" checked> Αυτόματη βελτιστοποίηση μοντέλου διόρθωσης (τάση επιπέδου + IDW, επιλογή παραμέτρων μέσω cross-validation)</label>
+    <label class="check"><input type="checkbox" id="autoout" checked> Αυτόματος αποκλεισμός χονδροειδών σφαλμάτων — outliers (έως 15% των σημείων)</label>
+    <div class="hint">Με ενεργή τη βελτιστοποίηση, ο εκθέτης IDW και η μέγ. απόσταση παραπάνω αγνοούνται (επιλέγονται αυτόματα οι βέλτιστοι).</div>
     <div class="calmeta" id="calmeta"></div>
   </div>
 </section>
@@ -456,6 +459,79 @@ function idwCorrection(x, y, cps, power, maxDist){
   return {dz: vsum/wsum, dnear};
 }
 
+/* ---------- Βελτιστοποιημένο μοντέλο διόρθωσης: τάση επιπέδου + IDW k-γειτόνων ---------- */
+let calModel = null;
+
+function fitTrend(cps){
+  const n = cps.length;
+  let sx=0, sy=0; for(const c of cps){ sx+=c.x; sy+=c.y; }
+  const mx=sx/n, my=sy/n;
+  let Sxx=0,Sxy=0,Syy=0,Sxz=0,Syz=0,Sz=0;
+  for(const c of cps){
+    const dx=c.x-mx, dy=c.y-my;
+    Sxx+=dx*dx; Sxy+=dx*dy; Syy+=dy*dy; Sxz+=dx*c.dz; Syz+=dy*c.dz; Sz+=c.dz;
+  }
+  const det = Sxx*Syy - Sxy*Sxy;
+  if(Math.abs(det) < 1e-6) return {a:Sz/n, b:0, c:0, mx, my};   // συνευθειακά σημεία
+  return {a:Sz/n, b:(Sxz*Syy-Syz*Sxy)/det, c:(Syz*Sxx-Sxz*Sxy)/det, mx, my};
+}
+const trendAt = (t,x,y) => t.a + t.b*(x-t.mx) + t.c*(y-t.my);
+
+function corrAt(x, y, cps, model){
+  const tr = model.trend;
+  const res = cps.map(c => ({
+    v: c.dz - (tr ? trendAt(tr, c.x, c.y) : 0),
+    d: Math.hypot(x-c.x, y-c.y)
+  })).sort((a,b) => a.d - b.d);
+  const kk = Math.min(model.k, res.length);
+  let ws=0, vs=0, exact=null;
+  for(let i=0; i<kk; i++){
+    const r = res[i];
+    if(r.d < 0.01){ exact = r.v; break; }
+    const w = 1/Math.pow(r.d, model.power);
+    ws += w; vs += w*r.v;
+  }
+  const idwv = exact != null ? exact : (ws ? vs/ws : 0);
+  return (tr ? trendAt(tr, x, y) : 0) + idwv;
+}
+
+function looEval(cps, prm){
+  const errs = []; let se = 0;
+  for(let i=0; i<cps.length; i++){
+    const others = cps.filter((_,j) => j !== i);
+    const model = {
+      trend: (prm.useTrend && others.length >= 4) ? fitTrend(others) : null,
+      power: prm.power, k: prm.k
+    };
+    const err = corrAt(cps[i].x, cps[i].y, others, model) - cps[i].dz;
+    errs.push(err); se += err*err;
+  }
+  return {rmse: Math.sqrt(se/cps.length), errs};
+}
+
+function optimizeModel(cps){
+  const ks = [...new Set([4,8,16,1e9].map(k => Math.min(k, cps.length-1)))];
+  let best = null;
+  for(const useTrend of (cps.length >= 5 ? [false, true] : [false]))
+    for(const power of [1,2,3])
+      for(const k of ks){
+        const r = looEval(cps, {useTrend, power, k});
+        if(!best || r.rmse < best.rmse) best = {useTrend, power, k, rmse:r.rmse, errs:r.errs};
+      }
+  return best;
+}
+
+function applyCal(x, y){
+  const cps = calModel.cps;
+  let dnear = Infinity;
+  for(const c of cps) dnear = Math.min(dnear, Math.hypot(x-c.x, y-c.y));
+  if(calModel.simple){
+    const r = idwCorrection(x, y, cps, calModel.power, calModel.maxDist);
+    return {dz: r.dz, dnear};
+  }
+  return {dz: corrAt(x, y, cps, calModel), dnear};
+}
+
 /* ---------- DEM ---------- */
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const SRC_ORDER = ["aws","openmeteo","openelevation"];
@@ -608,7 +684,7 @@ function relativeAccuracy(){
 $("run").addEventListener("click", async () => {
   try{
     $("run").disabled = true;
-    calRMSE = null; controls = []; tin = null; contours = null;
+    calRMSE = null; controls = []; calModel = null; tin = null; contours = null;
     $("cv").style.display="none"; $("legend").style.display="none";
     $("dldxf").disabled = $("dldxfc").disabled = true;
 
@@ -629,8 +705,43 @@ $("run").addEventListener("click", async () => {
       if(controls.length){
         if(src === "kml") throw new Error("Η βαθμονόμηση απαιτεί πηγή DEM (όχι «Μόνο από το KML»).");
         const cpDem = await fetchElevations(controls, src, "Λήψη DEM στα σημεία ελέγχου");
-        controls.forEach((c,i)=>{ c.zdem = cpDem[i].alt; c.dz = c.z - c.zdem; });
-        if(controls.length >= 2){
+        controls.forEach((c,i)=>{ c.zdem = cpDem[i].alt; c.dz = c.z - c.zdem; c.excluded = false; });
+        if($("autoopt").checked && controls.length >= 4){
+          status("Βελτιστοποίηση μοντέλου διόρθωσης (cross-validation)…");
+          let act = controls.slice();
+          let best = optimizeModel(act);
+          // αυτόματος αποκλεισμός χονδροειδών σφαλμάτων
+          if($("autoout").checked && act.length >= 8){
+            const abs = best.errs.map(Math.abs);
+            const med = abs.slice().sort((a,b)=>a-b)[Math.floor(abs.length/2)];
+            const mad = abs.map(e=>Math.abs(e-med)).sort((a,b)=>a-b)[Math.floor(abs.length/2)];
+            const thr = Math.max(3 * 1.4826 * mad, 0.10);
+            const idx = act.map((_,i)=>i)
+              .filter(i => abs[i] > thr)
+              .sort((a,b) => abs[b]-abs[a])
+              .slice(0, Math.floor(act.length * 0.15));
+            if(idx.length){
+              idx.forEach(i => act[i].excluded = true);
+              act = act.filter(c => !c.excluded);
+              best = optimizeModel(act);
+            }
+          }
+          const active = controls.filter(c => !c.excluded);
+          const nExcl = controls.length - active.length;
+          calModel = {
+            trend: best.useTrend ? fitTrend(active) : null,
+            power: best.power, k: best.k, cps: active,
+            desc: (best.useTrend ? "τάση επιπέδου + " : "") + "IDW (p=" + best.power +
+                  ", k=" + (best.k >= active.length ? "όλα" : best.k) + ")" +
+                  (nExcl ? " · εξαιρέθηκαν " + nExcl + " outliers" : "")
+          };
+          calRMSE = best.rmse;
+          let ai = 0;
+          controls.forEach(c => {
+            if(c.excluded) c.cvErr = corrAt(c.x, c.y, active, calModel) - c.dz;
+            else c.cvErr = best.errs[ai++];
+          });
+        } else if(controls.length >= 2){
           let se = 0;
           for(let i=0;i<controls.length;i++){
             const others = controls.filter((_,j)=>j!==i);
@@ -639,6 +750,9 @@ $("run").addEventListener("click", async () => {
             se += controls[i].cvErr**2;
           }
           calRMSE = Math.sqrt(se/controls.length);
+          calModel = {simple:true, power, maxDist, cps:controls.slice(), desc:"IDW (p="+power+")"};
+        } else {
+          calModel = {simple:true, power, maxDist, cps:controls.slice(), desc:"σταθερή μετατόπιση (1 σημείο)"};
         }
       }
     }
@@ -647,8 +761,8 @@ $("run").addEventListener("click", async () => {
     result = pts.map(p => {
       const [x,y] = proj4("EPSG:4326","EPSG:2100",[p.lon,p.lat]);
       let z = p.alt, dnear = null;
-      if(controls.length){
-        const corr = idwCorrection(x, y, controls, power, maxDist);
+      if(controls.length && calModel){
+        const corr = applyCal(x, y);
         z = p.alt + corr.dz; dnear = corr.dnear;
       }
       return {x, y, z: z + zoff, lat: p.lat, lon: p.lon, dnear};
@@ -668,6 +782,7 @@ $("run").addEventListener("click", async () => {
       const mean = dzs.reduce((a,b)=>a+b,0)/dzs.length;
       html += `<br><span class="lbl">──────────────────────</span><br>`+
         `<span class="lbl">ΒΑΘΜΟΝΟΜΗΣΗ:</span> <span class="cal">${controls.length} σημεία ελέγχου</span><br>`+
+        (calModel ? `<span class="lbl">ΜΟΝΤΕΛΟ&nbsp;&nbsp;&nbsp;:</span> <span class="cal">${calModel.desc}</span><br>` : "")+
         `<span class="lbl">ΔΖ μέσο&nbsp;&nbsp;&nbsp;:</span> <span class="cal">${mean>=0?"+":""}${mean.toFixed(3)} m (εύρος ${Math.min(...dzs).toFixed(2)} … ${Math.max(...dzs).toFixed(2)})</span><br>`+
         (calRMSE!=null
           ? `<span class="lbl">RMSE (CV)&nbsp;:</span> <span class="cal">±${calRMSE.toFixed(3)} m</span><br>`
@@ -690,8 +805,14 @@ $("run").addEventListener("click", async () => {
 
     let msg = `✓ Ολοκληρώθηκε — ${result.length} σημεία σε ΕΓΣΑ'87.`;
     if(calRMSE != null){
-      msg += `\nΕκτιμώμενη ακρίβεια Ζ (cross-validation): ±${(calRMSE*100).toFixed(1)} cm`;
-      if(calRMSE > 0.10) msg += `\n→ Πάνω από 10 cm: πρόσθεσε σημεία ελέγχου σε αλλαγές κλίσης / αραιές περιοχές.`;
+      msg += `\nΕκτιμώμενη ακρίβεια Ζ (cross-validation): ±${(calRMSE*100).toFixed(1)} cm — μοντέλο: ${calModel.desc}`;
+      const ra = relativeAccuracy();
+      if(ra != null && ra < 95){
+        const worst = controls.filter(c=>!c.excluded && c.cvErr!=null)
+          .sort((a,b)=>Math.abs(b.cvErr)-Math.abs(a.cvErr)).slice(0,3)
+          .map(c=>`${c.id} (${(c.cvErr*100).toFixed(0)} cm)`).join(", ");
+        msg += `\nΣχετική ακρίβεια ${ra.toFixed(1)}% < 95%. Για βελτίωση: 1) επανέλεγξε τα σημεία με τα μεγαλύτερα σφάλματα: ${worst}, 2) πρόσθεσε μετρήσεις στις περιοχές απότομης αλλαγής κλίσης και εκεί όπου η απόσταση από σημείο ελέγχου είναι μεγάλη, 3) δοκίμασε άλλη πηγή DEM.`;
+      }
     }
     status(msg, calRMSE!=null && calRMSE<=0.10 ? "ok" : (controls.length? "" : "ok"));
   }catch(err){
@@ -706,7 +827,7 @@ function renderCalTable(){
   const tb = t.querySelector("tbody"); tb.innerHTML = "";
   for(const c of controls){
     tb.insertAdjacentHTML("beforeend",
-      `<tr><td>${c.id}</td><td>${c.z.toFixed(2)}</td><td>${isFinite(c.zdem)?c.zdem.toFixed(2):"—"}</td>`+
+      `<tr><td>${c.id}${c.excluded ? ' <span style="color:var(--err)">(ΕΚΤΟΣ)</span>' : ''}</td><td>${c.z.toFixed(2)}</td><td>${isFinite(c.zdem)?c.zdem.toFixed(2):"—"}</td>`+
       `<td>${c.dz>=0?"+":""}${c.dz.toFixed(3)}</td>`+
       `<td>${c.cvErr!=null ? (c.cvErr>=0?"+":"")+c.cvErr.toFixed(3) : "—"}</td></tr>`);
   }
@@ -1020,7 +1141,9 @@ function buildReport(){
   L.push("BRB DEVELOPMENT — ΑΝΑΦΟΡΑ ΒΑΘΜΟΝΟΜΗΣΗΣ ΥΨΟΜΕΤΡΩΝ");
   L.push("Αρχείο: " + fileName);
   L.push("Πηγή DEM: " + $("elevsrc").options[$("elevsrc").selectedIndex].text);
-  L.push("Μέθοδος: IDW (εκθέτης " + $("idwpow").value + ")" + (parseFloat($("maxdist").value)>0 ? ", μέγ. απόσταση "+$("maxdist").value+" m" : ""));
+  L.push("Μέθοδος διόρθωσης: " + (calModel ? calModel.desc : "—") + " (επιλογή μέσω leave-one-out cross-validation)");
+  const excl = controls.filter(c => c.excluded);
+  if(excl.length) L.push("Εξαιρεθέντα σημεία (χονδροειδή σφάλματα): " + excl.map(c=>c.id).join(", ") + " — συνιστάται επανέλεγχος/επαναμέτρησή τους.");
   L.push("");
   L.push("ΣΗΜΕΙΑ ΕΛΕΓΧΟΥ");
   L.push("ID\tX\tY\tZ_μετρ\tZ_DEM\tΔΖ\tΣφάλμα_CV");
