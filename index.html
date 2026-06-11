@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BRB Terrain | KMZ → ΕΓΣΑ'87 · TIN · Ισοϋψείς</title>
+<meta name="theme-color" content="#1b2127">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.9.2/proj4.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>/* Delaunator 5 - ενσωματωμένη, χωρίς CDN */
+var __Del=(()=>{var $=Object.defineProperty;var ct=Object.getOwnPropertyDescriptor;var et=Object.getOwnPropertyNames;var it=Object.prototype.hasOwnProperty;var rt=(r,t)=>{for(var o in t)$(r,o,{get:t[o],enumerable:!0})},lt=(r,t,o,h)=>{if(t&&typeof t=="object"||typeof t=="function")for(let f of et(t))!it.call(r,f)&&f!==o&&$(r,f,{get:()=>t[f],enumerable:!(h=ct(t,f))||h.enumerable});return r};var at=r=>lt($({},"__esModule",{value:!0}),r);var vt={};rt(vt,{default:()=>At});var v=11102230246251565e-32,L=134217729,O=(3+8*v)*v;function G(r,t,o,h,f){let c,e,i,b,d=t[0],M=h[0],s=0,l=0;M>d==M>-d?(c=d,d=t[++s]):(c=M,M=h[++l]);let a=0;if(s<r&&l<o)for(M>d==M>-d?(e=d+c,i=c-(e-d),d=t[++s]):(e=M+c,i=c-(e-M),M=h[++l]),c=e,i!==0&&(f[a++]=i);s<r&&l<o;)M>d==M>-d?(e=c+d,b=e-c,i=c-(e-b)+(d-b),d=t[++s]):(e=c+M,b=e-c,i=c-(e-b)+(M-b),M=h[++l]),c=e,i!==0&&(f[a++]=i);for(;s<r;)e=c+d,b=e-c,i=c-(e-b)+(d-b),d=t[++s],c=e,i!==0&&(f[a++]=i);for(;l<o;)e=c+M,b=e-c,i=c-(e-b)+(M-b),M=h[++l],c=e,i!==0&&(f[a++]=i);return(c!==0||a===0)&&(f[a++]=c),a}function R(r,t){let o=t[0];for(let h=1;h<r;h++)o+=t[h];return o}function n(r){return new Float64Array(r)}var ht=(3+16*v)*v,ft=(2+12*v)*v,ut=(9+64*v)*v*v,H=n(4),x=n(8),y=n(12),tt=n(16),N=n(4);function dt(r,t,o,h,f,c,e){let i,b,d,M,s,l,a,m,_,A,p,k,I,j,C,U,E,K,u=r-f,w=o-f,g=t-c,S=h-c;j=u*S,l=L*u,a=l-(l-u),m=u-a,l=L*S,_=l-(l-S),A=S-_,C=m*A-(j-a*_-m*_-a*A),U=g*w,l=L*g,a=l-(l-g),m=g-a,l=L*w,_=l-(l-w),A=w-_,E=m*A-(U-a*_-m*_-a*A),p=C-E,s=C-p,H[0]=C-(p+s)+(s-E),k=j+p,s=k-j,I=j-(k-s)+(p-s),p=I-U,s=I-p,H[1]=I-(p+s)+(s-U),K=k+p,s=K-k,H[2]=k-(K-s)+(p-s),H[3]=K;let D=R(4,H),P=ft*e;if(D>=P||-D>=P||(s=r-u,i=r-(u+s)+(s-f),s=o-w,d=o-(w+s)+(s-f),s=t-g,b=t-(g+s)+(s-c),s=h-S,M=h-(S+s)+(s-c),i===0&&b===0&&d===0&&M===0)||(P=ut*e+O*Math.abs(D),D+=u*M+S*i-(g*d+w*b),D>=P||-D>=P))return D;j=i*S,l=L*i,a=l-(l-i),m=i-a,l=L*S,_=l-(l-S),A=S-_,C=m*A-(j-a*_-m*_-a*A),U=b*w,l=L*b,a=l-(l-b),m=b-a,l=L*w,_=l-(l-w),A=w-_,E=m*A-(U-a*_-m*_-a*A),p=C-E,s=C-p,N[0]=C-(p+s)+(s-E),k=j+p,s=k-j,I=j-(k-s)+(p-s),p=I-U,s=I-p,N[1]=I-(p+s)+(s-U),K=k+p,s=K-k,N[2]=k-(K-s)+(p-s),N[3]=K;let Q=G(4,H,4,N,x);j=u*M,l=L*u,a=l-(l-u),m=u-a,l=L*M,_=l-(l-M),A=M-_,C=m*A-(j-a*_-m*_-a*A),U=g*d,l=L*g,a=l-(l-g),m=g-a,l=L*d,_=l-(l-d),A=d-_,E=m*A-(U-a*_-m*_-a*A),p=C-E,s=C-p,N[0]=C-(p+s)+(s-E),k=j+p,s=k-j,I=j-(k-s)+(p-s),p=I-U,s=I-p,N[1]=I-(p+s)+(s-U),K=k+p,s=K-k,N[2]=k-(K-s)+(p-s),N[3]=K;let T=G(Q,x,4,N,y);j=i*M,l=L*i,a=l-(l-i),m=i-a,l=L*M,_=l-(l-M),A=M-_,C=m*A-(j-a*_-m*_-a*A),U=b*d,l=L*b,a=l-(l-b),m=b-a,l=L*d,_=l-(l-d),A=d-_,E=m*A-(U-a*_-m*_-a*A),p=C-E,s=C-p,N[0]=C-(p+s)+(s-E),k=j+p,s=k-j,I=j-(k-s)+(p-s),p=I-U,s=I-p,N[1]=I-(p+s)+(s-U),K=k+p,s=K-k,N[2]=k-(K-s)+(p-s),N[3]=K;let B=G(T,y,4,N,tt);return tt[B-1]}function X(r,t,o,h,f,c){let e=(t-c)*(o-f),i=(r-f)*(h-c),b=e-i,d=Math.abs(e+i);return Math.abs(b)>=ht*d?b:-dt(r,t,o,h,f,c,d)}var Ct=(7+56*v)*v,Ut=(3+28*v)*v,Kt=(26+288*v)*v*v,Dt=n(4),Lt=n(4),Bt=n(4),Et=n(4),Pt=n(4),Nt=n(4),Qt=n(4),qt=n(4),Ft=n(4),Gt=n(8),Ht=n(8),Xt=n(8),Yt=n(4),Ot=n(8),Rt=n(8),Jt=n(16),Vt=n(12),Wt=n(192),Zt=n(192);var xt=(10+96*v)*v,yt=(4+48*v)*v,tn=(44+576*v)*v*v,nn=n(4),sn=n(4),on=n(4),cn=n(4),en=n(4),rn=n(4),ln=n(4),an=n(4),hn=n(8),fn=n(8),un=n(8),dn=n(8),_n=n(8),bn=n(8),pn=n(8),mn=n(8),Mn=n(8),gn=n(4),wn=n(4),An=n(4),vn=n(8),kn=n(16),Sn=n(16),In=n(16),Tn=n(32),jn=n(32),Cn=n(48),Un=n(64),Kn=n(1152),Dn=n(1152);var Pn=(16+224*v)*v,Nn=(5+72*v)*v,Qn=(71+1408*v)*v*v,qn=n(4),Fn=n(4),Gn=n(4),Hn=n(4),Xn=n(4),Yn=n(4),On=n(4),Rn=n(4),Jn=n(4),Vn=n(4),Wn=n(24),Zn=n(24),$n=n(24),zn=n(24),xn=n(24),yn=n(24),ts=n(24),ns=n(24),ss=n(24),os=n(24),cs=n(1152),es=n(1152),is=n(1152),rs=n(1152),ls=n(1152),as=n(2304),hs=n(2304),fs=n(3456),us=n(5760),ds=n(8),_s=n(8),bs=n(8),ps=n(16),ms=n(24),Ms=n(48),gs=n(48),ws=n(96),As=n(192),vs=n(384),ks=n(384),Ss=n(384),Is=n(768);var Ts=n(96),js=n(96),Cs=n(96),Us=n(1152);var st=Math.pow(2,-52),W=new Uint32Array(512),V=class r{static from(t,o=gt,h=wt){let f=t.length,c=new Float64Array(f*2);for(let e=0;e<f;e++){let i=t[e];c[2*e]=o(i),c[2*e+1]=h(i)}return new r(c)}constructor(t){let o=t.length>>1;if(o>0&&typeof t[0]!="number")throw new Error("Expected coords to contain numbers.");this.coords=t;let h=Math.max(2*o-5,0);this._triangles=new Uint32Array(h*3),this._halfedges=new Int32Array(h*3),this._hashSize=Math.ceil(Math.sqrt(o)),this._hullPrev=new Uint32Array(o),this._hullNext=new Uint32Array(o),this._hullTri=new Uint32Array(o),this._hullHash=new Int32Array(this._hashSize),this._ids=new Uint32Array(o),this._dists=new Float64Array(o),this.trianglesLen=0,this._cx=0,this._cy=0,this._hullStart=0,this.hull=this._triangles,this.triangles=this._triangles,this.halfedges=this._halfedges,this.update()}update(){let{coords:t,_hullPrev:o,_hullNext:h,_hullTri:f,_hullHash:c}=this,e=t.length>>1,i=1/0,b=1/0,d=-1/0,M=-1/0;for(let u=0;u<e;u++){let w=t[2*u],g=t[2*u+1];w<i&&(i=w),g<b&&(b=g),w>d&&(d=w),g>M&&(M=g),this._ids[u]=u}let s=(i+d)/2,l=(b+M)/2,a=0,m=0,_=0;for(let u=0,w=1/0;u<e;u++){let g=z(s,l,t[2*u],t[2*u+1]);g<w&&(a=u,w=g)}let A=t[2*a],p=t[2*a+1];for(let u=0,w=1/0;u<e;u++){if(u===a)continue;let g=z(A,p,t[2*u],t[2*u+1]);g<w&&g>0&&(m=u,w=g)}let k=t[2*m],I=t[2*m+1],j=1/0;for(let u=0;u<e;u++){if(u===a||u===m)continue;let w=mt(A,p,k,I,t[2*u],t[2*u+1]);w<j&&(_=u,j=w)}let C=t[2*_],U=t[2*_+1];if(j===1/0){for(let g=0;g<e;g++)this._dists[g]=t[2*g]-t[0]||t[2*g+1]-t[1];Y(this._ids,this._dists,0,e-1);let u=new Uint32Array(e),w=0;for(let g=0,S=-1/0;g<e;g++){let D=this._ids[g],P=this._dists[D];P>S&&(u[w++]=D,S=P)}this.hull=u.subarray(0,w),this.triangles=new Uint32Array(0),this.halfedges=new Int32Array(0);return}if(X(A,p,k,I,C,U)<0){let u=m,w=k,g=I;m=_,k=C,I=U,_=u,C=w,U=g}let E=Mt(A,p,k,I,C,U);this._cx=E.x,this._cy=E.y;for(let u=0;u<e;u++)this._dists[u]=z(t[2*u],t[2*u+1],E.x,E.y);Y(this._ids,this._dists,0,e-1),this._hullStart=a;let K=3;h[a]=o[_]=m,h[m]=o[a]=_,h[_]=o[m]=a,f[a]=0,f[m]=1,f[_]=2,c.fill(-1),c[this._hashKey(A,p)]=a,c[this._hashKey(k,I)]=m,c[this._hashKey(C,U)]=_,this.trianglesLen=0,this._addTriangle(a,m,_,-1,-1,-1);for(let u=0,w=0,g=0;u<this._ids.length;u++){let S=this._ids[u],D=t[2*S],P=t[2*S+1];if(u>0&&Math.abs(D-w)<=st&&Math.abs(P-g)<=st||(w=D,g=P,S===a||S===m||S===_))continue;let Q=0;for(let Z=0,ot=this._hashKey(D,P);Z<this._hashSize&&(Q=c[(ot+Z)%this._hashSize],!(Q!==-1&&Q!==h[Q]));Z++);Q=o[Q];let T=Q,B;for(;B=h[T],X(D,P,t[2*T],t[2*T+1],t[2*B],t[2*B+1])>=0;)if(T=B,T===Q){T=-1;break}if(T===-1)continue;let F=this._addTriangle(T,S,h[T],-1,-1,f[T]);f[S]=this._legalize(F+2),f[T]=F,K++;let q=h[T];for(;B=h[q],X(D,P,t[2*q],t[2*q+1],t[2*B],t[2*B+1])<0;)F=this._addTriangle(q,S,B,f[S],-1,f[q]),f[S]=this._legalize(F+2),h[q]=q,K--,q=B;if(T===Q)for(;B=o[T],X(D,P,t[2*B],t[2*B+1],t[2*T],t[2*T+1])<0;)F=this._addTriangle(B,S,T,-1,f[T],f[B]),this._legalize(F+2),f[B]=F,h[T]=T,K--,T=B;this._hullStart=o[S]=T,h[T]=o[q]=S,h[S]=q,c[this._hashKey(D,P)]=S,c[this._hashKey(t[2*T],t[2*T+1])]=T}this.hull=new Uint32Array(K);for(let u=0,w=this._hullStart;u<K;u++)this.hull[u]=w,w=h[w];this.triangles=this._triangles.subarray(0,this.trianglesLen),this.halfedges=this._halfedges.subarray(0,this.trianglesLen)}_hashKey(t,o){return Math.floor(bt(t-this._cx,o-this._cy)*this._hashSize)%this._hashSize}_legalize(t){let{_triangles:o,_halfedges:h,coords:f}=this,c=0,e=0;for(;;){let i=h[t],b=t-t%3;if(e=b+(t+2)%3,i===-1){if(c===0)break;t=W[--c];continue}let d=i-i%3,M=b+(t+1)%3,s=d+(i+2)%3,l=o[e],a=o[t],m=o[M],_=o[s];if(pt(f[2*l],f[2*l+1],f[2*a],f[2*a+1],f[2*m],f[2*m+1],f[2*_],f[2*_+1])){o[t]=_,o[i]=l;let p=h[s];if(p===-1){let I=this._hullStart;do{if(this._hullTri[I]===s){this._hullTri[I]=t;break}I=this._hullPrev[I]}while(I!==this._hullStart)}this._link(t,p),this._link(i,h[e]),this._link(e,s);let k=d+(i+1)%3;c<W.length&&(W[c++]=k)}else{if(c===0)break;t=W[--c]}}return e}_link(t,o){this._halfedges[t]=o,o!==-1&&(this._halfedges[o]=t)}_addTriangle(t,o,h,f,c,e){let i=this.trianglesLen;return this._triangles[i]=t,this._triangles[i+1]=o,this._triangles[i+2]=h,this._link(i,f),this._link(i+1,c),this._link(i+2,e),this.trianglesLen+=3,i}};function bt(r,t){let o=r/(Math.abs(r)+Math.abs(t));return(t>0?3-o:1+o)/4}function z(r,t,o,h){let f=r-o,c=t-h;return f*f+c*c}function pt(r,t,o,h,f,c,e,i){let b=r-e,d=t-i,M=o-e,s=h-i,l=f-e,a=c-i,m=b*b+d*d,_=M*M+s*s,A=l*l+a*a;return b*(s*A-_*a)-d*(M*A-_*l)+m*(M*a-s*l)<0}function mt(r,t,o,h,f,c){let e=o-r,i=h-t,b=f-r,d=c-t,M=e*e+i*i,s=b*b+d*d,l=.5/(e*d-i*b),a=(d*M-i*s)*l,m=(e*s-b*M)*l;return a*a+m*m}function Mt(r,t,o,h,f,c){let e=o-r,i=h-t,b=f-r,d=c-t,M=e*e+i*i,s=b*b+d*d,l=.5/(e*d-i*b),a=r+(d*M-i*s)*l,m=t+(e*s-b*M)*l;return{x:a,y:m}}function Y(r,t,o,h){if(h-o<=20)for(let f=o+1;f<=h;f++){let c=r[f],e=t[c],i=f-1;for(;i>=o&&t[r[i]]>e;)r[i+1]=r[i--];r[i+1]=c}else{let f=o+h>>1,c=o+1,e=h;J(r,f,c),t[r[o]]>t[r[h]]&&J(r,o,h),t[r[c]]>t[r[h]]&&J(r,c,h),t[r[o]]>t[r[c]]&&J(r,o,c);let i=r[c],b=t[i];for(;;){do c++;while(t[r[c]]<b);do e--;while(t[r[e]]>b);if(e<c)break;J(r,c,e)}r[o+1]=r[e],r[e]=i,h-c+1>=e-o?(Y(r,t,c,h),Y(r,t,o,e-1)):(Y(r,t,o,e-1),Y(r,t,c,h))}}function J(r,t,o){let h=r[t];r[t]=r[o],r[o]=h}function gt(r){return r[0]}function wt(r){return r[1]}var At=V;return at(vt);})();
+window.Delaunator = __Del.default || __Del;
+
+</script>
+<style>
+  :root{
+    --bg:#1b2127;
+    --panel:#222a33;
+    --panel2:#28323c;
+    --line:#36424e;
+    --ink:#e6eaee;
+    --ink-dim:#94a3b0;
+    --accent:#41b6e6;
+    --accent-ink:#06222e;
+    --ok:#3ddc97;
+    --err:#e07a6a;
+    --cal:#7ee2b8;
+    --mono:'Consolas','Menlo','DejaVu Sans Mono',monospace;
+    --sans:'Segoe UI','Helvetica Neue',Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);min-height:100vh;padding:20px 14px 40px}
+  @media (max-width:600px){
+    body{padding:12px 8px 30px}
+    .step-body{padding:12px}
+    button.primary,button.ghost{width:100%;padding:14px 18px}
+    .btnrow{flex-direction:column}
+    .app-title{margin-left:0;text-align:left;width:100%}
+    th,td{padding:5px 6px;font-size:.72rem}
+  }
+  input,select,textarea,button{font-size:max(16px,.85rem)} /* αποφυγή zoom στο iOS */
+  .wrap{max-width:900px;margin:0 auto}
+
+  /* ── BRB header ── */
+  header{display:flex;align-items:center;gap:14px;border-bottom:2px solid var(--accent);padding-bottom:14px;margin-bottom:22px;flex-wrap:wrap}
+  .logo{display:flex;align-items:center;gap:12px}
+  .logo svg{display:block}
+  .logo-text .l1{font-size:1.15rem;font-weight:700;letter-spacing:.14em}
+  .logo-text .l2{font-size:.62rem;letter-spacing:.34em;color:var(--ink-dim);text-transform:uppercase;margin-top:1px}
+  .app-title{margin-left:auto;text-align:right}
+  .app-title .t1{font-family:var(--mono);font-size:.85rem;color:var(--accent)}
+  .app-title .t2{font-family:var(--mono);font-size:.68rem;color:var(--ink-dim);margin-top:2px}
+  footer{margin-top:30px;border-top:1px solid var(--line);padding-top:12px;font-size:.7rem;color:var(--ink-dim);font-family:var(--mono);display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
+
+  .step{background:var(--panel);border:1px solid var(--line);border-radius:8px;margin-bottom:14px;overflow:hidden}
+  .step-head{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--panel2);border-bottom:1px solid var(--line)}
+  .step-head .n{font-family:var(--mono);font-size:.75rem;color:var(--accent);border:1px solid var(--line);border-radius:3px;padding:1px 7px}
+  .step-head h2{font-size:.95rem;font-weight:600}
+  .step-head .tag{margin-left:auto;font-size:.7rem;font-family:var(--mono);color:var(--cal);border:1px solid var(--cal);border-radius:3px;padding:1px 7px}
+  .step-body{padding:16px}
+
+  .drop{border:2px dashed var(--line);border-radius:6px;padding:24px 16px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s}
+  .drop:hover,.drop.over{border-color:var(--accent);background:#233039}
+  .drop p{color:var(--ink-dim);font-size:.88rem}
+  .drop .big{color:var(--ink);font-size:.95rem;margin-bottom:4px}
+  .drop input{display:none}
+  .filemeta{margin-top:10px;font-family:var(--mono);font-size:.8rem;color:var(--ok);display:none}
+
+  .optgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  .opt label{display:block;font-size:.8rem;color:var(--ink-dim);margin-bottom:5px}
+  .opt select,.opt input[type=number],.opt input[type=text]{width:100%;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:8px 10px;font-family:var(--mono);font-size:.85rem}
+  .opt select:focus,.opt input:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
+  .check{display:flex;align-items:center;gap:8px;font-size:.85rem;cursor:pointer;user-select:none;margin-top:6px}
+  .check input{width:16px;height:16px;accent-color:var(--accent)}
+  .hint{font-size:.74rem;color:var(--ink-dim);margin-top:4px;line-height:1.45}
+
+  textarea{width:100%;min-height:110px;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:10px;font-family:var(--mono);font-size:.82rem;resize:vertical}
+
+  button.primary{background:var(--accent);color:var(--accent-ink);border:none;border-radius:5px;padding:11px 22px;font-size:.92rem;font-weight:700;cursor:pointer;font-family:var(--sans)}
+  button.primary:hover{filter:brightness(1.08)}
+  button.primary:disabled{background:var(--line);color:var(--ink-dim);cursor:not-allowed}
+  button.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent);border-radius:5px;padding:10px 18px;font-size:.88rem;cursor:pointer}
+  button.ghost:hover{background:rgba(65,182,230,.12)}
+  button.ghost:disabled{color:var(--ink-dim);border-color:var(--line);cursor:not-allowed}
+  button.small{padding:7px 14px;font-size:.8rem}
+  button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+  .status{font-family:var(--mono);font-size:.8rem;margin-top:12px;color:var(--ink-dim);min-height:1.2em;white-space:pre-wrap}
+  .status.ok{color:var(--ok)} .status.err{color:var(--err)}
+  .calmeta{font-family:var(--mono);font-size:.8rem;margin-top:10px;color:var(--cal);white-space:pre-wrap}
+
+  .readout{background:#0e2018;border:1px solid #274a3c;border-radius:6px;padding:14px 16px;font-family:var(--mono);color:#86e0b3;font-size:.82rem;line-height:1.7;display:none;box-shadow:inset 0 0 24px rgba(0,0,0,.5)}
+  .readout .lbl{color:#4d8a6e}
+  .readout .val{color:#c4f5dd}
+  .readout .cal{color:#6fd0ff}
+
+  table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:.78rem;margin-top:12px}
+  th,td{padding:6px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+  th{color:var(--ink-dim);font-weight:400;border-bottom:1px solid var(--accent)}
+  th:first-child,td:first-child{text-align:left}
+  .tablewrap{overflow-x:auto;max-height:280px;overflow-y:auto}
+
+  .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .warn{background:#2b2418;border:1px solid #5a4a25;border-radius:5px;padding:10px 12px;font-size:.78rem;color:#d9c08a;line-height:1.5;margin-top:14px}
+  .info{background:#1a2730;border:1px solid #2f4a5a;border-radius:5px;padding:10px 12px;font-size:.78rem;color:#a9cfe0;line-height:1.5;margin-top:14px}
+  progress{width:100%;height:8px;accent-color:var(--accent);margin-top:8px;display:none}
+
+  #cv{width:100%;background:#131a20;border:1px solid var(--line);border-radius:6px;margin-top:14px;display:none;touch-action:none}
+  .legend{display:none;gap:18px;font-family:var(--mono);font-size:.72rem;color:var(--ink-dim);margin-top:8px;flex-wrap:wrap}
+  .legend span::before{content:"—— ";font-weight:700}
+  .legend .lminor::before{color:#4a7fa5} .legend .lmajor::before{color:#3ddc97} .legend .lpts::before{content:"· · ";color:#4cc3ff}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div id="sandboxwarn" style="display:none;background:#5a2520;border:2px solid #e07a6a;border-radius:8px;padding:14px 16px;margin-bottom:16px;font-size:.9rem;line-height:1.6;color:#ffd9d2">
+  <b>⛔ Τρέχεις την εφαρμογή μέσα στο preview του Claude!</b><br>
+  Εδώ μέσα οι συνδέσεις στα DEM APIs είναι μπλοκαρισμένες — η λήψη υψομέτρων θα αποτυγχάνει πάντα («Failed to fetch»).<br>
+  <b>Λύση:</b> Πάτησε το κουμπί λήψης (κάτω δεξιά στο preview ή στο συνημμένο αρχείο στη συνομιλία) → αποθήκευσέ το → άνοιξε τον φάκελο <b>Λήψεις (Downloads)</b> → <b>διπλό κλικ</b> στο αρχείο για να ανοίξει στον Chrome/Edge. Εκεί δουλεύουν όλα κανονικά.
+</div>
+<header>
+  <div class="logo">
+    <img src="data:image/png;base64,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" alt="BRB Development" style="height:64px;width:auto;display:block">
+    <div class="logo-text">
+      <div class="l2">Civil Engineering · Surveying · Λευκάδα</div>
+    </div>
+  </div>
+  <div class="app-title">
+    <div class="t1">BRB TERRAIN v3</div>
+    <div class="t2">KMZ → ΕΓΣΑ'87 · TIN · Ισοϋψείς · EPSG:2100</div>
+  </div>
+</header>
+
+<!-- ΒΗΜΑ 1 -->
+<section class="step">
+  <div class="step-head"><span class="n">1</span><h2>Αρχείο KML / KMZ</h2></div>
+  <div class="step-body">
+    <div class="drop" id="drop" tabindex="0" role="button" aria-label="Επιλογή αρχείου KML ή KMZ">
+      <p class="big">Σύρε εδώ το αρχείο ή πάτησε για επιλογή</p>
+      <p>Δέχεται .kml και .kmz (διαδρομές ή σημεία από Google Earth)</p>
+      <input type="file" id="file" accept=".kml,.kmz">
+    </div>
+    <div class="filemeta" id="filemeta"></div>
+  </div>
+</section>
+
+<!-- ΒΗΜΑ 2 -->
+<section class="step">
+  <div class="step-head"><span class="n">2</span><h2>Επιλογές επεξεργασίας</h2></div>
+  <div class="step-body">
+    <div class="optgrid">
+      <div class="opt">
+        <label for="dens">Πύκνωση διαδρομής (βήμα σε m)</label>
+        <input type="number" id="dens" value="0" min="0" step="0.5">
+        <div class="hint">0 = μόνο κορυφές. Για TIN/ισοϋψείς προτείνεται 3–10 m.</div>
+      </div>
+      <div class="opt">
+        <label for="elevsrc">Πηγή υψομέτρων (DEM)</label>
+        <select id="elevsrc">
+          <option value="aws" selected>Terrain Tiles SRTM ~30 m (AWS) — προτείνεται</option>
+          <option value="openmeteo">Open-Meteo · Copernicus DEM 90 m</option>
+          <option value="openelevation">Open-Elevation · SRTM</option>
+          <option value="kml">Μόνο από το KML (χωρίς internet)</option>
+        </select>
+      </div>
+      <div class="opt">
+        <label for="zoff">Διόρθωση Ζ (offset σε m)</label>
+        <input type="number" id="zoff" value="0" step="0.01">
+      </div>
+    </div>
+    <label class="check"><input type="checkbox" id="forceElev" checked> Αντικατάσταση υψομέτρων από DEM ακόμη κι αν το KML έχει τιμές Ζ</label>
+  </div>
+</section>
+
+<!-- ΒΗΜΑ 3: ΒΑΘΜΟΝΟΜΗΣΗ -->
+<section class="step">
+  <div class="step-head"><span class="n">3</span><h2>Σημεία ελέγχου από το πεδίο</h2><span class="tag">ΒΑΘΜΟΝΟΜΗΣΗ</span></div>
+  <div class="step-body">
+    <div class="opt" style="margin-bottom:10px">
+      <label for="cps">Μετρημένα σημεία — μία γραμμή ανά σημείο: <b>ID,X,Y,Z</b> ή <b>X,Y,Z</b> (ΕΓΣΑ'87 ή WGS84, κόμμα/tab/κενό)</label>
+      <textarea id="cps" placeholder="S1,365412.350,4278551.120,84.32
+S2,365498.110,4278602.450,86.07
+S3,365390.500,4278640.880,85.11"></textarea>
+      <div class="hint">ΔΖ = Ζ_μετρημένο − Ζ_DEM ανά σημείο → επιφάνεια διόρθωσης IDW → εφαρμογή σε όλη τη διαδρομή. Κενό = χωρίς βαθμονόμηση.</div>
+    </div>
+    <div class="btnrow" style="margin-top:0">
+      <button class="ghost small" id="cpfileBtn">Φόρτωση από .txt/.csv</button>
+      <input type="file" id="cpfile" accept=".txt,.csv" style="display:none">
+      <button class="ghost small" id="cpcheck">Έλεγχος σημείων</button>
+    </div>
+    <div class="optgrid" style="margin-top:14px">
+      <div class="opt">
+        <label for="idwpow">Εκθέτης IDW</label>
+        <select id="idwpow"><option value="2" selected>2 (στάνταρ)</option><option value="1">1</option><option value="3">3</option></select>
+      </div>
+      <div class="opt">
+        <label for="maxdist">Μέγ. απόσταση επιρροής (m, 0 = απεριόριστη)</label>
+        <input type="number" id="maxdist" value="0" min="0">
+      </div>
+    </div>
+    <div class="calmeta" id="calmeta"></div>
+  </div>
+</section>
+
+<!-- ΒΗΜΑ 4 -->
+<section class="step">
+  <div class="step-head"><span class="n">4</span><h2>Μετατροπή</h2></div>
+  <div class="step-body">
+    <button class="primary" id="run" disabled>Μετατροπή σε ΕΓΣΑ&rsquo;87</button>
+    <progress id="prog" max="100" value="0"></progress>
+    <div class="status" id="status"></div>
+    <div class="readout" id="readout"></div>
+    <div class="tablewrap"><table id="caltbl" style="display:none">
+      <thead><tr><th>Σημείο</th><th>Ζ μετρημένο</th><th>Ζ DEM</th><th>ΔΖ (m)</th><th>Σφάλμα CV (m)</th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+    <div class="tablewrap"><table id="tbl" style="display:none">
+      <thead><tr><th>Α/Α</th><th>Χ (m)</th><th>Υ (m)</th><th>Ζ (m)</th><th>Απόστ. από σημ. ελέγχου</th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- ΒΗΜΑ 5: TIN & ΙΣΟΫΨΕΙΣ -->
+<section class="step">
+  <div class="step-head"><span class="n">5</span><h2>Επιφάνεια TIN &amp; Ισοϋψείς</h2><span class="tag">DXF</span></div>
+  <div class="step-body">
+    <div class="optgrid">
+      <div class="opt">
+        <label for="cint">Ισοδιάσταση (m)</label>
+        <input type="number" id="cint" value="0.5" min="0.05" step="0.05">
+      </div>
+      <div class="opt">
+        <label for="cmaj">Κύρια ισοϋψής ανά</label>
+        <select id="cmaj">
+          <option value="5" selected>5 × ισοδιάσταση</option>
+          <option value="4">4 × ισοδιάσταση</option>
+          <option value="2">2 × ισοδιάσταση</option>
+          <option value="10">10 × ισοδιάσταση</option>
+        </select>
+      </div>
+      <div class="opt">
+        <label for="maxedge">Μέγ. πλευρά τριγώνου (m, 0 = αυτόματο)</label>
+        <input type="number" id="maxedge" value="0" min="0" step="1">
+        <div class="hint">Κόβει τα «ψεύτικα» μεγάλα τρίγωνα. Το αυτόματο πλέον λαμβάνει υπόψη και τα αραιά σημεία ελέγχου. Αν τα σημεία ελέγχου μένουν εκτός επιφάνειας, βάλε χειροκίνητα ~1.5× τη μέγιστη απόσταση μεταξύ γειτονικών σημείων (π.χ. 25–35).</div>
+      </div>
+    </div>
+    <label class="check"><input type="checkbox" id="inccp" checked> Συμπερίληψη σημείων ελέγχου στο TIN (οι μετρήσεις πεδίου γίνονται κορυφές της επιφάνειας)</label>
+    <label class="check"><input type="checkbox" id="smoothc" checked> Εξομάλυνση ισοϋψών (Chaikin) — ομαλές καμπύλες αντί για τεθλασμένες</label>
+    <div class="btnrow">
+      <button class="primary" id="tinbtn" disabled>Δημιουργία TIN &amp; ισοϋψών</button>
+    </div>
+    <div class="status" id="tinstatus"></div>
+    <canvas id="cv" height="420" aria-label="Προεπισκόπηση ισοϋψών"></canvas>
+    <div class="legend" id="legend">
+      <span class="lminor">Δευτερεύουσες</span>
+      <span class="lmajor">Κύριες</span>
+      <span class="lpts">Σημεία</span>
+    </div>
+    <div class="btnrow">
+      <button class="ghost" id="dldxf" disabled>Λήψη DXF (TIN + ισοϋψείς + σημεία)</button>
+      <button class="ghost" id="dldxfc" disabled>Λήψη DXF (μόνο ισοϋψείς)</button>
+    </div>
+    <div class="info">ℹ Το DXF περιέχει layers: <b>BRB_TIN</b> (3DFACE), <b>BRB_CONTOURS</b> / <b>BRB_CONTOURS_MAJOR</b> (3D polylines στο υψόμετρό τους), <b>BRB_POINTS</b> (POINT με Ζ), <b>BRB_LABELS</b> (υψόμετρα κύριων ισοϋψών). Ανοίγει απευθείας σε ProgeCAD/AutoCAD σε συντεταγμένες ΕΓΣΑ'87.</div>
+  </div>
+</section>
+
+<!-- ΒΗΜΑ 6 -->
+<section class="step">
+  <div class="step-head"><span class="n">6</span><h2>Εξαγωγή TXT</h2></div>
+  <div class="step-body">
+    <div class="optgrid">
+      <div class="opt"><label for="sep">Διαχωριστικό</label>
+        <select id="sep"><option value=",">Κόμμα ( , )</option><option value="&#9;">Tab</option><option value=" ">Κενό</option><option value=";">Ελληνικό ερωτηματικό ( ; )</option></select></div>
+      <div class="opt"><label for="decxy">Δεκαδικά Χ,Υ</label><input type="number" id="decxy" value="3" min="0" max="6"></div>
+      <div class="opt"><label for="decz">Δεκαδικά Ζ</label><input type="number" id="decz" value="2" min="0" max="4"></div>
+      <div class="opt"><label for="startnum">Αρίθμηση από</label><input type="number" id="startnum" value="1" min="0"></div>
+      <div class="opt"><label for="prefix">Πρόθεμα σημείου</label><input type="text" id="prefix" value="" placeholder="π.χ. S"></div>
+    </div>
+    <div class="btnrow">
+      <button class="primary" id="dl" disabled>Λήψη .txt</button>
+      <button class="ghost" id="copy" disabled>Αντιγραφή</button>
+      <button class="ghost" id="dlcsv" disabled>Λήψη .csv</button>
+      <button class="ghost" id="dlrep" disabled>Αναφορά βαθμονόμησης</button>
+    </div>
+    <div class="warn">⚠ Χωρίς σημεία ελέγχου, υψόμετρα DEM = ±2–10 m. Με βαθμονόμηση, η ακρίβεια δίνεται από το RMSE (cross-validation). Παραδοτέο ενδεικτικό/προμελέτης — όχι τοπογραφική αποτύπωση.</div>
+  </div>
+</section>
+
+<!-- ΑΠΟΠΟΙΗΣΗ ΕΥΘΥΝΗΣ -->
+<section class="step" id="disclaimer">
+  <div class="step-head"><span class="n">§</span><h2>Αποποίηση Ευθύνης — Όροι Χρήσης</h2></div>
+  <div class="step-body" style="font-size:.78rem;color:var(--ink-dim);line-height:1.7">
+    <p style="margin-bottom:10px">Η παρούσα εφαρμογή («BRB Terrain») αποτελεί βοηθητικό εργαλείο κατ&rsquo; εκτίμηση υψομετρικής απεικόνισης του εδάφους, βασιζόμενο σε δημοσίως διαθέσιμα ψηφιακά μοντέλα εδάφους (DEM) και σε δεδομένα που εισάγει ο χρήστης. Τα παραγόμενα αποτελέσματα (συντεταγμένες, υψόμετρα, τριγωνισμοί, ισοϋψείς καμπύλες και εξαγόμενα αρχεία πάσης φύσεως) έχουν αποκλειστικά ενδεικτικό και πληροφοριακό χαρακτήρα.</p>
+    <p style="margin-bottom:10px">Η εφαρμογή <b style="color:var(--ink)">δεν υποκαθιστά καθ&rsquo; οιονδήποτε τρόπο τις επιτόπιες μετρήσεις με τοπογραφικά όργανα</b> (γεωδαιτικούς σταθμούς, δέκτες GNSS κ.λπ.), ούτε παράγει ή υποκαθιστά τοπογραφικά διαγράμματα, τοπογραφικές μελέτες ή οποιοδήποτε προϊόν μηχανικού κατά την έννοια της κείμενης νομοθεσίας. Τα αποτελέσματά της δεν είναι δεκτικά χρήσης για συμβολαιογραφικές πράξεις, πράξεις κτηματολογίου, έκδοση οικοδομικών αδειών, οριοθετήσεις ιδιοκτησιών ή οποιαδήποτε άλλη πράξη για την οποία απαιτείται εκ του νόμου τοπογραφικό διάγραμμα συντεταγμένο από αρμόδιο μηχανικό.</p>
+    <p>Η εταιρεία BRB DEVELOPMENT ΜΟΝ. ΙΚΕ ουδεμία ευθύνη φέρει, ρητώς αποποιούμενη κάθε σχετική ευθύνη, για οποιαδήποτε άμεση ή έμμεση, θετική ή αποθετική ζημία ήθελε τυχόν προκύψει από τη χρήση της εφαρμογής, από σφάλματα, ανακρίβειες ή ελλείψεις των παραγόμενων αποτελεσμάτων, ή από αποφάσεις ληφθείσες βάσει αυτών. Η χρήση της εφαρμογής γίνεται με αποκλειστική ευθύνη του χρήστη, ο οποίος τεκμαίρεται ότι αποδέχεται ανεπιφύλακτα τους παρόντες όρους.</p>
+  </div>
+</section>
+
+<footer>
+  <span>BRB DEVELOPMENT ΜΟΝ. ΙΚΕ — Λευκάδα · Ενδεικτική απεικόνιση, δεν υποκαθιστά τοπογραφική μελέτη</span>
+  <span>ΕΓΣΑ'87 / GGRS87 · EPSG:2100 · proj4js</span>
+</footer>
+</div>
+
+<script>
+proj4.defs("EPSG:2100","+proj=tmerc +lat_0=0 +lon_0=24 +k=0.9996 +x_0=500000 +y_0=0 +ellps=GRS80 +towgs84=-199.87,74.79,246.62 +units=m +no_defs");
+
+// Ανίχνευση sandboxed περιβάλλοντος (preview Claude κ.λπ.)
+(function(){
+  try{
+    const h = location.hostname || "";
+    const sandboxed = location.protocol === "blob:" || location.protocol === "about:" ||
+                      /claudeusercontent|claude\.ai|anthropic/i.test(h) ||
+                      (window.top !== window.self && location.protocol !== "file:" && h === "");
+    if(sandboxed || /claudeusercontent/i.test(document.referrer)) document.getElementById("sandboxwarn").style.display = "block";
+  }catch(e){ /* cross-origin iframe => πιθανότατα sandbox */ document.getElementById("sandboxwarn").style.display = "block"; }
+})();
+
+let rawPoints = [], result = [], controls = [], calRMSE = null, fileName = "diadromi";
+let tin = null;       // {tris:[[i,j,k],...]}
+let contours = null;  // [{level, major, paths:[[ {x,y},... ],...]}]
+
+const $ = id => document.getElementById(id);
+const status = (msg, cls="") => { const s=$("status"); s.textContent=msg; s.className="status "+cls; };
+const tstatus = (msg, cls="") => { const s=$("tinstatus"); s.textContent=msg; s.className="status "+cls; };
+
+/* ---------- 1. Φόρτωση KML/KMZ ---------- */
+const drop = $("drop"), fileInput = $("file");
+drop.addEventListener("click", () => fileInput.click());
+drop.addEventListener("keydown", e => { if(e.key==="Enter"||e.key===" "){e.preventDefault();fileInput.click();} });
+["dragover","dragenter"].forEach(ev => drop.addEventListener(ev, e => {e.preventDefault();drop.classList.add("over");}));
+["dragleave","drop"].forEach(ev => drop.addEventListener(ev, e => {e.preventDefault();drop.classList.remove("over");}));
+drop.addEventListener("drop", e => { if(e.dataTransfer.files.length) loadFile(e.dataTransfer.files[0]); });
+fileInput.addEventListener("change", () => { if(fileInput.files.length) loadFile(fileInput.files[0]); });
+
+async function loadFile(f){
+  try{
+    fileName = f.name.replace(/\.(kmz|kml)$/i,"");
+    let kmlText;
+    if(/\.kmz$/i.test(f.name)){
+      const zip = await JSZip.loadAsync(f);
+      let entry = zip.file("doc.kml") || zip.file(/\.kml$/i)[0];
+      if(!entry) throw new Error("Δεν βρέθηκε .kml μέσα στο KMZ.");
+      kmlText = await entry.async("string");
+    } else kmlText = await f.text();
+    rawPoints = parseKML(kmlText);
+    if(!rawPoints.length) throw new Error("Δεν βρέθηκαν συντεταγμένες στο αρχείο.");
+    const hasZ = rawPoints.some(p => Math.abs(p.alt) > 0.01);
+    $("filemeta").style.display = "block";
+    $("filemeta").textContent = `✓ ${f.name} — ${rawPoints.length} κορυφές` + (hasZ ? " (με υψόμετρα στο KML)" : " (χωρίς υψόμετρα — θα ληφθούν από DEM)");
+    $("run").disabled = false;
+    status("Έτοιμο για μετατροπή.");
+  }catch(err){ status("Σφάλμα: " + err.message, "err"); }
+}
+
+function parseKML(text){
+  const dom = new DOMParser().parseFromString(text, "text/xml");
+  const pts = [];
+  dom.querySelectorAll("coordinates").forEach(node => {
+    node.textContent.trim().split(/\s+/).forEach(triplet => {
+      const parts = triplet.split(",");
+      if(parts.length >= 2){
+        const lon = parseFloat(parts[0]), lat = parseFloat(parts[1]);
+        const alt = parts.length > 2 ? parseFloat(parts[2]) || 0 : 0;
+        if(isFinite(lon) && isFinite(lat)) pts.push({lat, lon, alt});
+      }
+    });
+  });
+  return pts.filter((p,i,a) => i===0 || p.lat!==a[i-1].lat || p.lon!==a[i-1].lon);
+}
+
+/* ---------- Πύκνωση ---------- */
+const R = 6371000;
+function hav(a,b){
+  const dφ=(b.lat-a.lat)*Math.PI/180, dλ=(b.lon-a.lon)*Math.PI/180;
+  const φ1=a.lat*Math.PI/180, φ2=b.lat*Math.PI/180;
+  const h=Math.sin(dφ/2)**2+Math.cos(φ1)*Math.cos(φ2)*Math.sin(dλ/2)**2;
+  return 2*R*Math.asin(Math.sqrt(h));
+}
+function densify(pts, step){
+  if(step<=0 || pts.length<2) return pts.slice();
+  const out=[pts[0]];
+  for(let i=1;i<pts.length;i++){
+    const a=pts[i-1], b=pts[i], d=hav(a,b);
+    const n=Math.floor(d/step);
+    for(let k=1;k<=n;k++){
+      const t=k*step/d; if(t>=1) break;
+      out.push({lat:a.lat+(b.lat-a.lat)*t, lon:a.lon+(b.lon-a.lon)*t, alt:a.alt+(b.alt-a.alt)*t});
+    }
+    out.push(b);
+  }
+  return out;
+}
+
+/* ---------- 3. Σημεία ελέγχου ---------- */
+$("cpfileBtn").addEventListener("click", () => $("cpfile").click());
+$("cpfile").addEventListener("change", async () => { if($("cpfile").files.length) $("cps").value = await $("cpfile").files[0].text(); });
+$("cpcheck").addEventListener("click", () => {
+  try{
+    const cps = parseControls($("cps").value);
+    $("calmeta").textContent = cps.length
+      ? `✓ ${cps.length} σημεία ελέγχου (${cps[0].srcCrs})\n` +
+        cps.slice(0,5).map(c=>`  ${c.id}: X=${c.x.toFixed(3)} Y=${c.y.toFixed(3)} Z=${c.z.toFixed(2)}`).join("\n") +
+        (cps.length>5?`\n  … +${cps.length-5} ακόμη`:"")
+      : "Δεν αναγνωρίστηκαν σημεία.";
+  }catch(err){ $("calmeta").textContent = "Σφάλμα: " + err.message; }
+});
+
+function parseControls(text){
+  const out = [];
+  let lineNo = 0;
+  for(const raw of text.split(/\r?\n/)){
+    lineNo++;
+    const line = raw.trim();
+    if(!line || /^(id|α\/α|point)/i.test(line)) continue;
+    const parts = line.split(/[,;\t]+|\s+/).filter(Boolean);
+    let id, nums;
+    if(parts.length >= 4){ id = parts[0]; nums = parts.slice(1,4).map(Number); }
+    else if(parts.length === 3){ id = "CP"+(out.length+1); nums = parts.map(Number); }
+    else continue;
+    if(nums.some(n=>!isFinite(n))) throw new Error(`Μη αριθμητική τιμή στη γραμμή ${lineNo}: "${line}"`);
+    let [a,b,z] = nums, x, y, lat, lon, srcCrs;
+    if(a >= 33 && a <= 42 && b >= 19 && b <= 30){ lat=a; lon=b; [x,y]=proj4("EPSG:4326","EPSG:2100",[lon,lat]); srcCrs="WGS84 φ,λ"; }
+    else if(a >= 19 && a <= 30 && b >= 33 && b <= 42){ lon=a; lat=b; [x,y]=proj4("EPSG:4326","EPSG:2100",[lon,lat]); srcCrs="WGS84 λ,φ"; }
+    else if(a > 100000 && a < 1000000 && b > 3700000 && b < 4700000){ x=a; y=b; [lon,lat]=proj4("EPSG:2100","EPSG:4326",[x,y]); srcCrs="ΕΓΣΑ'87"; }
+    else if(b > 100000 && b < 1000000 && a > 3700000 && a < 4700000){ x=b; y=a; [lon,lat]=proj4("EPSG:2100","EPSG:4326",[x,y]); srcCrs="ΕΓΣΑ'87 (Y,X)"; }
+    else throw new Error(`Δεν αναγνωρίζεται το σύστημα συντεταγμένων στη γραμμή ${lineNo}: "${line}"`);
+    out.push({id, x, y, z, lat, lon, srcCrs});
+  }
+  return out;
+}
+
+function idwCorrection(x, y, cps, power, maxDist){
+  let wsum=0, vsum=0;
+  for(const c of cps){
+    const d = Math.hypot(x-c.x, y-c.y);
+    if(d < 0.01) return {dz: c.dz, dnear: 0};
+    if(maxDist>0 && d>maxDist) continue;
+    const w = 1/Math.pow(d, power);
+    wsum += w; vsum += w*c.dz;
+  }
+  let dnear = Infinity;
+  for(const c of cps) dnear = Math.min(dnear, Math.hypot(x-c.x, y-c.y));
+  if(wsum === 0){
+    const mean = cps.reduce((s,c)=>s+c.dz,0)/cps.length;
+    return {dz: mean, dnear};
+  }
+  return {dz: vsum/wsum, dnear};
+}
+
+/* ---------- DEM ---------- */
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const SRC_ORDER = ["aws","openmeteo","openelevation"];
+const SRC_NAMES = {aws:"AWS Terrain Tiles", openmeteo:"Open-Meteo", openelevation:"Open-Elevation"};
+
+async function fetchElevations(pts, src, label){
+  const order = [src, ...SRC_ORDER.filter(s => s !== src)];
+  let lastErr = null;
+  for(const s of order){
+    try{
+      return await fetchElevationsRaw(pts, s, label + (s===src ? "" : " — εναλλακτική: "+SRC_NAMES[s]));
+    }catch(e){
+      lastErr = e;
+      status(label + "… " + SRC_NAMES[s] + " απέτυχε (" + e.message + "), δοκιμή επόμενης πηγής…");
+      await sleep(300);
+    }
+  }
+  $("prog").style.display = "none";
+  const sandboxed = document.getElementById("sandboxwarn").style.display === "block";
+  throw new Error("Καμία πηγή υψομέτρων δεν απαντά. " +
+    (sandboxed ? "Τρέχεις σε preview — κατέβασε το αρχείο και άνοιξέ το τοπικά." : "Έλεγξε τη σύνδεση internet ή το firewall/antivirus."));
+}
+
+async function fetchElevationsRaw(pts, src, label){
+  if(src === "aws") return await fetchAws(pts, label);
+  if(src === "openmeteo") return await fetchOpenMeteo(pts, label);
+  return await fetchOpenElevation(pts, label);
+}
+
+/* --- AWS Terrain Tiles (terrarium PNG, χωρίς όρια/κλειδί, CORS OK) --- */
+const tileCache = new Map();
+async function getTile(z, x, y){
+  const key = z + "/" + x + "/" + y;
+  if(tileCache.has(key)) return tileCache.get(key);
+  const resp = await fetch(`https://s3.amazonaws.com/elevation-tiles-prod/terrarium/${z}/${x}/${y}.png`);
+  if(!resp.ok) throw new Error("tile HTTP " + resp.status);
+  const bmp = await createImageBitmap(await resp.blob());
+  const cnv = document.createElement("canvas");
+  cnv.width = 256; cnv.height = 256;
+  const cx = cnv.getContext("2d");
+  cx.drawImage(bmp, 0, 0);
+  const data = cx.getImageData(0, 0, 256, 256).data;
+  tileCache.set(key, data);
+  return data;
+}
+function terrariumElev(data, px, py){ // διγραμμική παρεμβολή pixel
+  const gv = (x, y) => {
+    x = Math.min(255, Math.max(0, x)); y = Math.min(255, Math.max(0, y));
+    const i = (y*256 + x)*4;
+    return data[i]*256 + data[i+1] + data[i+2]/256 - 32768;
+  };
+  const x0 = Math.floor(px), y0 = Math.floor(py);
+  const fx = px - x0, fy = py - y0;
+  return gv(x0,y0)*(1-fx)*(1-fy) + gv(x0+1,y0)*fx*(1-fy) + gv(x0,y0+1)*(1-fx)*fy + gv(x0+1,y0+1)*fx*fy;
+}
+async function fetchAws(pts, label){
+  const prog = $("prog"); prog.style.display = "block"; prog.value = 0;
+  const z = 14, N = Math.pow(2, z);
+  const out = pts.map(p => ({...p}));
+  for(let i=0; i<out.length; i++){
+    const p = out[i];
+    const latr = p.lat * Math.PI/180;
+    const fx = (p.lon + 180)/360 * N;
+    const fy = (1 - Math.log(Math.tan(latr) + 1/Math.cos(latr))/Math.PI)/2 * N;
+    const tx = Math.floor(fx), ty = Math.floor(fy);
+    const data = await getTile(z, tx, ty);
+    p.alt = terrariumElev(data, (fx - tx)*256 - 0.5, (fy - ty)*256 - 0.5);
+    if(i % 50 === 0 || i === out.length-1){
+      prog.value = Math.round(100*(i+1)/out.length);
+      status(`${label}… ${i+1}/${out.length}`);
+    }
+  }
+  prog.style.display = "none";
+  return out;
+}
+
+/* --- Open-Meteo Elevation (Copernicus DEM 90m, CORS OK) --- */
+async function fetchOpenMeteo(pts, label){
+  const prog = $("prog"); prog.style.display = "block"; prog.value = 0;
+  const out = pts.map(p => ({...p}));
+  const CH = 80;
+  for(let i=0; i<out.length; i+=CH){
+    const chunk = out.slice(i, i+CH);
+    const lats = chunk.map(p => p.lat.toFixed(6)).join(",");
+    const lons = chunk.map(p => p.lon.toFixed(6)).join(",");
+    const resp = await fetch(`https://api.open-meteo.com/v1/elevation?latitude=${lats}&longitude=${lons}`);
+    if(!resp.ok) throw new Error("HTTP " + resp.status);
+    const data = await resp.json();
+    if(!data.elevation) throw new Error(data.reason || "άγνωστη απάντηση");
+    data.elevation.forEach((e, j) => out[i+j].alt = (e == null ? NaN : e));
+    prog.value = Math.round(100*Math.min(i+CH, out.length)/out.length);
+    status(`${label}… ${Math.min(i+CH, out.length)}/${out.length}`);
+    if(i+CH < out.length) await sleep(250);
+  }
+  prog.style.display = "none";
+  return out;
+}
+
+/* --- Open-Elevation (SRTM) --- */
+async function fetchOpenElevation(pts, label){
+  const prog = $("prog"); prog.style.display = "block"; prog.value = 0;
+  const out = pts.map(p => ({...p}));
+  const CH = 200;
+  for(let i=0; i<out.length; i+=CH){
+    const chunk = out.slice(i, i+CH);
+    const resp = await fetch("https://api.open-elevation.com/api/v1/lookup", {
+      method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({locations: chunk.map(p => ({latitude: p.lat, longitude: p.lon}))})
+    });
+    if(!resp.ok) throw new Error("HTTP " + resp.status);
+    const data = await resp.json();
+    data.results.forEach((r, j) => out[i+j].alt = r.elevation);
+    prog.value = Math.round(100*Math.min(i+CH, out.length)/out.length);
+    status(`${label}… ${Math.min(i+CH, out.length)}/${out.length}`);
+    if(i+CH < out.length) await sleep(400);
+  }
+  prog.style.display = "none";
+  return out;
+}
+
+/* ---------- 4. Μετατροπή ---------- */
+$("run").addEventListener("click", async () => {
+  try{
+    $("run").disabled = true;
+    calRMSE = null; controls = []; tin = null; contours = null;
+    $("cv").style.display="none"; $("legend").style.display="none";
+    $("dldxf").disabled = $("dldxfc").disabled = true;
+
+    let pts = densify(rawPoints, parseFloat($("dens").value)||0);
+    status(`Σημεία μετά την πύκνωση: ${pts.length}`);
+
+    const src = $("elevsrc").value;
+    const hasZ = pts.some(p => Math.abs(p.alt) > 0.01);
+    if(src !== "kml" && ($("forceElev").checked || !hasZ)){
+      pts = await fetchElevations(pts, src, "Λήψη υψομέτρων διαδρομής");
+    }
+
+    const cpText = $("cps").value.trim();
+    const power = parseFloat($("idwpow").value);
+    const maxDist = parseFloat($("maxdist").value)||0;
+    if(cpText){
+      controls = parseControls(cpText);
+      if(controls.length){
+        if(src === "kml") throw new Error("Η βαθμονόμηση απαιτεί πηγή DEM (όχι «Μόνο από το KML»).");
+        const cpDem = await fetchElevations(controls, src, "Λήψη DEM στα σημεία ελέγχου");
+        controls.forEach((c,i)=>{ c.zdem = cpDem[i].alt; c.dz = c.z - c.zdem; });
+        if(controls.length >= 2){
+          let se = 0;
+          for(let i=0;i<controls.length;i++){
+            const others = controls.filter((_,j)=>j!==i);
+            const pred = idwCorrection(controls[i].x, controls[i].y, others, power, maxDist).dz;
+            controls[i].cvErr = pred - controls[i].dz;
+            se += controls[i].cvErr**2;
+          }
+          calRMSE = Math.sqrt(se/controls.length);
+        }
+      }
+    }
+
+    const zoff = parseFloat($("zoff").value)||0;
+    result = pts.map(p => {
+      const [x,y] = proj4("EPSG:4326","EPSG:2100",[p.lon,p.lat]);
+      let z = p.alt, dnear = null;
+      if(controls.length){
+        const corr = idwCorrection(x, y, controls, power, maxDist);
+        z = p.alt + corr.dz; dnear = corr.dnear;
+      }
+      return {x, y, z: z + zoff, lat: p.lat, lon: p.lon, dnear};
+    });
+
+    let len=0; for(let i=1;i<pts.length;i++) len+=hav(pts[i-1],pts[i]);
+    const zs = result.map(r=>r.z).filter(z=>isFinite(z));
+    const dnears = result.map(r=>r.dnear).filter(d=>d!=null);
+    const ro=$("readout"); ro.style.display="block";
+    let html =
+      `<span class="lbl">ΣΗΜΕΙΑ&nbsp;&nbsp;&nbsp;&nbsp;:</span> <span class="val">${result.length}</span><br>`+
+      `<span class="lbl">ΜΗΚΟΣ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span> <span class="val">${len.toFixed(1)} m</span><br>`+
+      `<span class="lbl">Ζ min/max&nbsp;:</span> <span class="val">${zs.length?Math.min(...zs).toFixed(2):"—"} / ${zs.length?Math.max(...zs).toFixed(2):"—"} m</span><br>`+
+      `<span class="lbl">ΣΥΣΤΗΜΑ&nbsp;&nbsp;&nbsp;:</span> <span class="val">ΕΓΣΑ'87 (EPSG:2100)</span>`;
+    if(controls.length){
+      const dzs = controls.map(c=>c.dz);
+      const mean = dzs.reduce((a,b)=>a+b,0)/dzs.length;
+      html += `<br><span class="lbl">──────────────────────</span><br>`+
+        `<span class="lbl">ΒΑΘΜΟΝΟΜΗΣΗ:</span> <span class="cal">${controls.length} σημεία ελέγχου</span><br>`+
+        `<span class="lbl">ΔΖ μέσο&nbsp;&nbsp;&nbsp;:</span> <span class="cal">${mean>=0?"+":""}${mean.toFixed(3)} m (εύρος ${Math.min(...dzs).toFixed(2)} … ${Math.max(...dzs).toFixed(2)})</span><br>`+
+        (calRMSE!=null
+          ? `<span class="lbl">RMSE (CV)&nbsp;:</span> <span class="cal">±${calRMSE.toFixed(3)} m</span><br>`
+          : `<span class="lbl">RMSE (CV)&nbsp;:</span> <span class="cal">— (χρειάζονται ≥2 σημεία)</span><br>`)+
+        (dnears.length ? `<span class="lbl">Απόστ. max&nbsp;:</span> <span class="cal">${Math.max(...dnears).toFixed(1)} m από πλησιέστερο σημείο ελέγχου</span>` : "");
+    }
+    ro.innerHTML = html;
+
+    renderCalTable(); renderTable();
+    $("dl").disabled = $("copy").disabled = $("dlcsv").disabled = false;
+    $("dlrep").disabled = !controls.length;
+    $("tinbtn").disabled = result.length < 3;
+
+    let msg = `✓ Ολοκληρώθηκε — ${result.length} σημεία σε ΕΓΣΑ'87.`;
+    if(calRMSE != null){
+      msg += `\nΕκτιμώμενη ακρίβεια Ζ (cross-validation): ±${(calRMSE*100).toFixed(1)} cm`;
+      if(calRMSE > 0.10) msg += `\n→ Πάνω από 10 cm: πρόσθεσε σημεία ελέγχου σε αλλαγές κλίσης / αραιές περιοχές.`;
+    }
+    status(msg, calRMSE!=null && calRMSE<=0.10 ? "ok" : (controls.length? "" : "ok"));
+  }catch(err){
+    status("Σφάλμα: " + err.message + "\n(Αν τρέχεις το αρχείο σε περιορισμένο περιβάλλον, άνοιξέ το τοπικά στον browser.)", "err");
+    $("prog").style.display="none";
+  }finally{ $("run").disabled = false; }
+});
+
+function renderCalTable(){
+  const t = $("caltbl");
+  if(!controls.length){ t.style.display="none"; return; }
+  const tb = t.querySelector("tbody"); tb.innerHTML = "";
+  for(const c of controls){
+    tb.insertAdjacentHTML("beforeend",
+      `<tr><td>${c.id}</td><td>${c.z.toFixed(2)}</td><td>${isFinite(c.zdem)?c.zdem.toFixed(2):"—"}</td>`+
+      `<td>${c.dz>=0?"+":""}${c.dz.toFixed(3)}</td>`+
+      `<td>${c.cvErr!=null ? (c.cvErr>=0?"+":"")+c.cvErr.toFixed(3) : "—"}</td></tr>`);
+  }
+  t.style.display = "table";
+}
+function renderTable(){
+  const tb = $("tbl").querySelector("tbody"); tb.innerHTML = "";
+  const N = Math.min(result.length, 200);
+  for(let i=0;i<N;i++){
+    const r = result[i];
+    tb.insertAdjacentHTML("beforeend",
+      `<tr><td>${i+1}</td><td>${r.x.toFixed(3)}</td><td>${r.y.toFixed(3)}</td><td>${isFinite(r.z)?r.z.toFixed(2):"—"}</td>`+
+      `<td>${r.dnear!=null ? r.dnear.toFixed(1)+" m" : "—"}</td></tr>`);
+  }
+  if(result.length>N) tb.insertAdjacentHTML("beforeend",`<tr><td colspan="5" style="text-align:center;color:var(--ink-dim)">… +${result.length-N} ακόμη σημεία</td></tr>`);
+  $("tbl").style.display = "table";
+}
+
+/* ========== 5. TIN & ΙΣΟΫΨΕΙΣ ========== */
+$("tinbtn").addEventListener("click", () => {
+  try{
+    const pts = result.filter(r => isFinite(r.z)).map(r => ({x:r.x, y:r.y, z:r.z}));
+    if($("inccp").checked && controls.length){
+      for(const c of controls) pts.push({x:c.x, y:c.y, z:c.z});
+    }
+    if(pts.length < 3) throw new Error("Χρειάζονται τουλάχιστον 3 σημεία με υψόμετρο.");
+
+    // Delaunay
+    const del = Delaunator.from(pts, p=>p.x, p=>p.y);
+    let tris = [];
+    for(let t=0; t<del.triangles.length; t+=3)
+      tris.push([del.triangles[t], del.triangles[t+1], del.triangles[t+2]]);
+
+    // Φίλτρο μεγάλων πλευρών
+    let maxEdge = parseFloat($("maxedge").value)||0;
+    if(maxEdge <= 0){
+      // αυτόματο: 3 × το 90ό εκατοστημόριο της απόστασης πλησιέστερου γείτονα
+      // (λαμβάνει υπόψη ΚΑΙ τα αραιά σημεία ελέγχου, όχι μόνο την πυκνή διαδρομή)
+      const N = pts.length, nn = [];
+      const step = N > 1500 ? Math.ceil(N/1500) : 1;
+      for(let i=0; i<N; i+=step){
+        let best = Infinity;
+        for(let j=0; j<N; j++){
+          if(i===j) continue;
+          const d = (pts[i].x-pts[j].x)**2 + (pts[i].y-pts[j].y)**2;
+          if(d < best) best = d;
+        }
+        nn.push(Math.sqrt(best));
+      }
+      nn.sort((a,b)=>a-b);
+      maxEdge = (nn[Math.floor(nn.length*0.9)] || 10) * 3;
+    }
+    const edgeOK = (i,j) => Math.hypot(pts[i].x-pts[j].x, pts[i].y-pts[j].y) <= maxEdge;
+    tris = tris.filter(([a,b,c]) => edgeOK(a,b) && edgeOK(b,c) && edgeOK(c,a));
+    if(!tris.length) throw new Error(`Όλα τα τρίγωνα κόπηκαν από το φίλτρο (${maxEdge.toFixed(1)} m). Αύξησε το μέγιστο μήκος πλευράς.`);
+    tin = {tris, pts, maxEdge};
+
+    // Ισοϋψείς (marching triangles)
+    const dz = parseFloat($("cint").value)||0.5;
+    const majEvery = parseInt($("cmaj").value)||5;
+    const zs = pts.map(p=>p.z);
+    const zmin = Math.min(...zs), zmax = Math.max(...zs);
+    const lev0 = Math.ceil(zmin/dz)*dz;
+    const EPS = dz*1e-6;
+    const segsByLevel = new Map();
+
+    for(const [a,b,c] of tris){
+      const P = [pts[a], pts[b], pts[c]];
+      const tmin = Math.min(P[0].z,P[1].z,P[2].z), tmax = Math.max(P[0].z,P[1].z,P[2].z);
+      for(let L = Math.max(lev0, Math.ceil(tmin/dz)*dz); L <= tmax + EPS; L += dz){
+        const Lq = Math.round(L/dz)*dz;
+        const cuts = [];
+        for(let e=0;e<3;e++){
+          let p1 = P[e], p2 = P[(e+1)%3];
+          let z1 = p1.z===Lq ? p1.z+EPS : p1.z, z2 = p2.z===Lq ? p2.z+EPS : p2.z;
+          if((z1 < Lq) !== (z2 < Lq)){
+            const t = (Lq - z1)/(z2 - z1);
+            cuts.push({x: p1.x + t*(p2.x-p1.x), y: p1.y + t*(p2.y-p1.y)});
+          }
+        }
+        if(cuts.length === 2){
+          const key = Lq.toFixed(4);
+          if(!segsByLevel.has(key)) segsByLevel.set(key, []);
+          segsByLevel.get(key).push([cuts[0], cuts[1]]);
+        }
+      }
+    }
+
+    // Αλυσίδωση τμημάτων σε polylines + φίλτρο θραυσμάτων + εξομάλυνση
+    const pathLen = pth => { let L=0; for(let i=1;i<pth.length;i++) L += Math.hypot(pth[i].x-pth[i-1].x, pth[i].y-pth[i-1].y); return L; };
+    const doSmooth = $("smoothc").checked;
+    contours = [];
+    for(const [key, segs] of segsByLevel){
+      const level = parseFloat(key);
+      let paths = chainSegments(segs).filter(pth => pth.length >= 3 || pathLen(pth) >= 1.5);
+      if(doSmooth) paths = paths.map(pth => chaikin(pth, 2));
+      const major = Math.round(level/dz) % majEvery === 0;
+      if(paths.length) contours.push({level, major, paths});
+    }
+    contours.sort((a,b)=>a.level-b.level);
+
+    const nPaths = contours.reduce((s,c)=>s+c.paths.length,0);
+    tstatus(`✓ TIN: ${pts.length} σημεία, ${tris.length} τρίγωνα (μέγ. πλευρά ${maxEdge.toFixed(1)} m) · Ισοϋψείς: ${contours.length} στάθμες, ${nPaths} γραμμές (${zmin.toFixed(2)}–${zmax.toFixed(2)} m, ανά ${dz} m)`, "ok");
+    drawPreview();
+    $("dldxf").disabled = $("dldxfc").disabled = false;
+  }catch(err){ tstatus("Σφάλμα: " + err.message, "err"); }
+});
+
+function chaikin(path, iters){
+  // εξομάλυνση γωνιών με διατήρηση άκρων
+  for(let it=0; it<iters; it++){
+    if(path.length < 3) break;
+    const out = [path[0]];
+    for(let i=0; i<path.length-1; i++){
+      const a = path[i], b = path[i+1];
+      out.push({x: a.x*0.75 + b.x*0.25, y: a.y*0.75 + b.y*0.25});
+      out.push({x: a.x*0.25 + b.x*0.75, y: a.y*0.25 + b.y*0.75});
+    }
+    out.push(path[path.length-1]);
+    path = out;
+  }
+  return path;
+}
+
+function chainSegments(segs){
+  const Q = 1000; // mm
+  const keyOf = p => Math.round(p.x*Q)+"_"+Math.round(p.y*Q);
+  const adj = new Map();
+  segs.forEach((s,i)=>{
+    for(const p of s){
+      const k = keyOf(p);
+      if(!adj.has(k)) adj.set(k, []);
+      adj.get(k).push(i);
+    }
+  });
+  const used = new Array(segs.length).fill(false);
+  const paths = [];
+  for(let i=0;i<segs.length;i++){
+    if(used[i]) continue;
+    used[i] = true;
+    let path = [segs[i][0], segs[i][1]];
+    // επέκταση μπροστά και πίσω
+    for(const dir of [1,0]){
+      let grow = true;
+      while(grow){
+        grow = false;
+        const end = dir ? path[path.length-1] : path[0];
+        const k = keyOf(end);
+        for(const j of (adj.get(k)||[])){
+          if(used[j]) continue;
+          const [a,b] = segs[j];
+          let next = null;
+          if(keyOf(a)===k) next = b; else if(keyOf(b)===k) next = a;
+          if(next){
+            used[j] = true;
+            if(dir) path.push(next); else path.unshift(next);
+            grow = true;
+            break;
+          }
+        }
+      }
+    }
+    paths.push(path);
+  }
+  return paths;
+}
+
+/* ---------- Προεπισκόπηση canvas ---------- */
+function drawPreview(){
+  const cv = $("cv");
+  cv.style.display = "block"; $("legend").style.display = "flex";
+  const W = cv.clientWidth || 800;
+  cv.width = W * devicePixelRatio; cv.height = 420 * devicePixelRatio;
+  const ctx = cv.getContext("2d");
+  ctx.scale(devicePixelRatio, devicePixelRatio);
+  ctx.clearRect(0,0,W,420);
+
+  const pts = tin.pts;
+  const xs = pts.map(p=>p.x), ys = pts.map(p=>p.y);
+  const x0=Math.min(...xs), x1=Math.max(...xs), y0=Math.min(...ys), y1=Math.max(...ys);
+  const pad = 24;
+  const sc = Math.min((W-2*pad)/Math.max(x1-x0,1), (420-2*pad)/Math.max(y1-y0,1));
+  const tx = p => pad + (p.x-x0)*sc + (W-2*pad-(x1-x0)*sc)/2;
+  const ty = p => 420 - pad - (p.y-y0)*sc - (420-2*pad-(y1-y0)*sc)/2;
+
+  // ισοϋψείς
+  for(const c of contours){
+    ctx.strokeStyle = c.major ? "#3ddc97" : "#4a7fa5";
+    ctx.lineWidth = c.major ? 1.6 : 0.8;
+    for(const path of c.paths){
+      ctx.beginPath();
+      path.forEach((p,i)=> i ? ctx.lineTo(tx(p),ty(p)) : ctx.moveTo(tx(p),ty(p)));
+      ctx.stroke();
+      // ετικέτα στις κύριες
+      if(c.major && path.length > 4){
+        const m = path[Math.floor(path.length/2)];
+        ctx.fillStyle = "#3ddc97";
+        ctx.font = "10px Consolas,monospace";
+        ctx.fillText(c.level.toFixed(1), tx(m)+3, ty(m)-3);
+      }
+    }
+  }
+  // σημεία
+  ctx.fillStyle = "#4cc3ff";
+  for(const p of pts){ ctx.beginPath(); ctx.arc(tx(p), ty(p), 1.4, 0, 7); ctx.fill(); }
+  // σημεία ελέγχου
+  if(controls.length){
+    ctx.strokeStyle = "#e07a6a"; ctx.lineWidth = 1.4;
+    for(const c of controls){
+      const X = tx(c), Y = ty(c);
+      ctx.beginPath(); ctx.moveTo(X-5,Y); ctx.lineTo(X+5,Y); ctx.moveTo(X,Y-5); ctx.lineTo(X,Y+5); ctx.stroke();
+    }
+  }
+}
+
+/* ---------- DXF ---------- */
+function dxfNum(n){ return Number(n.toFixed(4)); }
+function buildDXF(includeTinAndPoints){
+  const E = [];
+  const push = (...a)=>E.push(...a);
+  push("999","BRB Terrain - BRB DEVELOPMENT MON. IKE - Endeiktiki ypsometriki apeikonisi.");
+  push("999","DEN ypokathista topografika diagrammata/meletes oute epitopies metriseis me organa.");
+  push("999","Apokleietai kathe efthyni tis etaireias gia xrisi i sfalmata. Xrisi me efthyni tou xristi.");
+  push("0","SECTION","2","HEADER","9","$INSUNITS","70","6","0","ENDSEC"); // meters
+  push("0","SECTION","2","ENTITIES");
+
+  if(includeTinAndPoints && tin){
+    for(const [a,b,c] of tin.tris){
+      const P=[tin.pts[a],tin.pts[b],tin.pts[c]];
+      push("0","3DFACE","8","BRB_TIN",
+        "10",dxfNum(P[0].x),"20",dxfNum(P[0].y),"30",dxfNum(P[0].z),
+        "11",dxfNum(P[1].x),"21",dxfNum(P[1].y),"31",dxfNum(P[1].z),
+        "12",dxfNum(P[2].x),"22",dxfNum(P[2].y),"32",dxfNum(P[2].z),
+        "13",dxfNum(P[2].x),"23",dxfNum(P[2].y),"33",dxfNum(P[2].z));
+    }
+    for(const p of tin.pts){
+      push("0","POINT","8","BRB_POINTS","10",dxfNum(p.x),"20",dxfNum(p.y),"30",dxfNum(p.z));
+    }
+    for(const c of controls){
+      push("0","POINT","8","BRB_CONTROL","62","1","10",dxfNum(c.x),"20",dxfNum(c.y),"30",dxfNum(c.z));
+      push("0","TEXT","8","BRB_CONTROL","62","1","10",dxfNum(c.x+0.5),"20",dxfNum(c.y+0.5),"30",dxfNum(c.z),"40","0.6","1",c.id);
+    }
+  }
+
+  const dz = parseFloat($("cint").value)||0.5;
+  const txtH = Math.max(0.3, dz*0.8);
+  for(const c of contours){
+    const layer = c.major ? "BRB_CONTOURS_MAJOR" : "BRB_CONTOURS";
+    for(const path of c.paths){
+      if(path.length < 2) continue;
+      push("0","POLYLINE","8",layer,"66","1","70","8");
+      for(const p of path){
+        push("0","VERTEX","8",layer,"10",dxfNum(p.x),"20",dxfNum(p.y),"30",dxfNum(c.level),"70","32");
+      }
+      push("0","SEQEND","8",layer);
+      if(c.major && path.length > 4){
+        const m = path[Math.floor(path.length/2)];
+        push("0","TEXT","8","BRB_LABELS","10",dxfNum(m.x),"20",dxfNum(m.y),"30",dxfNum(c.level),"40",String(txtH),"1",c.level.toFixed(2));
+      }
+    }
+  }
+
+  push("0","ENDSEC","0","EOF");
+  return E.join("\r\n");
+}
+
+function download(text, name){
+  const blob = new Blob([text], {type:"text/plain;charset=utf-8"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(a.href);
+}
+$("dldxf").addEventListener("click", () => download(buildDXF(true), fileName + "_TIN_contours_EGSA87.dxf"));
+$("dldxfc").addEventListener("click", () => download(buildDXF(false), fileName + "_contours_EGSA87.dxf"));
+
+/* ---------- 6. Εξαγωγή TXT ---------- */
+function buildTxt(sepOverride){
+  const sep = sepOverride ?? $("sep").value;
+  const dxy = parseInt($("decxy").value)||3, dz = parseInt($("decz").value)||2;
+  const start = parseInt($("startnum").value)||1;
+  const pre = $("prefix").value.trim();
+  return result.map((r,i) =>
+    `${pre}${start+i}${sep}${r.x.toFixed(dxy)}${sep}${r.y.toFixed(dxy)}${sep}${isFinite(r.z)?r.z.toFixed(dz):""}`
+  ).join("\r\n");
+}
+function buildReport(){
+  const L = [];
+  L.push("BRB DEVELOPMENT — ΑΝΑΦΟΡΑ ΒΑΘΜΟΝΟΜΗΣΗΣ ΥΨΟΜΕΤΡΩΝ");
+  L.push("Αρχείο: " + fileName);
+  L.push("Πηγή DEM: " + $("elevsrc").options[$("elevsrc").selectedIndex].text);
+  L.push("Μέθοδος: IDW (εκθέτης " + $("idwpow").value + ")" + (parseFloat($("maxdist").value)>0 ? ", μέγ. απόσταση "+$("maxdist").value+" m" : ""));
+  L.push("");
+  L.push("ΣΗΜΕΙΑ ΕΛΕΓΧΟΥ");
+  L.push("ID\tX\tY\tZ_μετρ\tZ_DEM\tΔΖ\tΣφάλμα_CV");
+  for(const c of controls){
+    L.push(`${c.id}\t${c.x.toFixed(3)}\t${c.y.toFixed(3)}\t${c.z.toFixed(3)}\t${isFinite(c.zdem)?c.zdem.toFixed(3):"-"}\t${c.dz.toFixed(3)}\t${c.cvErr!=null?c.cvErr.toFixed(3):"-"}`);
+  }
+  L.push("");
+  if(calRMSE!=null) L.push(`RMSE (leave-one-out cross-validation): ±${calRMSE.toFixed(3)} m`);
+  const dnears = result.map(r=>r.dnear).filter(d=>d!=null);
+  if(dnears.length) L.push(`Μέγιστη απόσταση σημείου διαδρομής από σημείο ελέγχου: ${Math.max(...dnears).toFixed(1)} m`);
+  L.push(`Σημεία διαδρομής: ${result.length}`);
+  if(tin) L.push(`TIN: ${tin.tris.length} τρίγωνα, μέγ. πλευρά ${tin.maxEdge.toFixed(1)} m`);
+  if(contours) L.push(`Ισοϋψείς: ${contours.length} στάθμες, ισοδιάσταση ${$("cint").value} m`);
+  L.push("");
+  L.push("ΑΠΟΠΟΙΗΣΗ ΕΥΘΥΝΗΣ: Τα παρόντα αποτελέσματα έχουν αποκλειστικά ενδεικτικό και");
+  L.push("πληροφοριακό χαρακτήρα. Δεν υποκαθιστούν επιτόπιες μετρήσεις με τοπογραφικά όργανα,");
+  L.push("ούτε τοπογραφικά διαγράμματα ή μελέτες κατά την έννοια της κείμενης νομοθεσίας, και");
+  L.push("δεν είναι δεκτικά χρήσης για συμβολαιογραφικές πράξεις, πράξεις κτηματολογίου,");
+  L.push("έκδοση αδειών ή οριοθετήσεις. Η BRB DEVELOPMENT ΜΟΝ. ΙΚΕ ουδεμία ευθύνη φέρει για");
+  L.push("ζημίες εκ της χρήσεως ή εκ σφαλμάτων των αποτελεσμάτων. Χρήση με αποκλειστική");
+  L.push("ευθύνη του χρήστη.");
+  return L.join("\r\n");
+}
+$("dl").addEventListener("click", () => download(buildTxt(), fileName + "_EGSA87.txt"));
+$("dlcsv").addEventListener("click", () => download("ID,X,Y,Z\r\n"+buildTxt(","), fileName + "_EGSA87.csv"));
+$("dlrep").addEventListener("click", () => download(buildReport(), fileName + "_calibration_report.txt"));
+/* PWA service worker - μόνο όταν σερβίρεται από https/localhost */
+if("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")){
+  navigator.serviceWorker.register("sw.js").catch(()=>{});
+}
+
+$("copy").addEventListener("click", async () => {
+  try{ await navigator.clipboard.writeText(buildTxt()); status("✓ Αντιγράφηκε στο πρόχειρο.","ok"); }
+  catch{ status("Δεν επιτράπηκε η αντιγραφή — χρησιμοποίησε τη Λήψη .txt","err"); }
+});
+</script>
+</body>
+</html>
